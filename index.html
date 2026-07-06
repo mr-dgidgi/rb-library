@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>RecoveryBox Library</title>
+    <style>
+        body { font-family: system-ui, sans-serif; background: #0f1720; color: #e6eef3; padding: 24px; }
+        h1 { color: #ffcc00; margin: 0 0 12px 0 }
+        .controls { display:flex; gap:12px; align-items:center; margin: 12px 0 18px 0 }
+        select,input[type="search"] { padding:6px 8px; border-radius:6px; border:1px solid #233; background:#0b1220; color:#e6eef3 }
+        table { width:100%; border-collapse:collapse; background:#071018; margin-top:8px }
+        th,td { padding:10px 12px; border-bottom:1px solid #122233; text-align:left }
+        th { background:#071826; color:#9fe3a2 }
+        tr:nth-child(even) td { background:#06121a }
+        a { color:#8feea1; text-decoration:none }
+        a:hover { text-decoration:underline }
+        .muted { color:#99a0a6 }
+        .summary { margin-top:6px; color:#cfe8d6 }
+        @media (max-width:720px){ .controls{flex-direction:column;align-items:stretch} td,th{padding:8px} }
+    </style>
+</head>
+<body>
+    <h1>RecoveryBox Library</h1>
+
+    <div class="controls">
+        <label>Category:
+            <select id="filter-category"><option value="">All</option></select>
+        </label>
+
+        <label>Language:
+            <select id="filter-language"><option value="">All</option></select>
+        </label>
+
+        <label>Search:
+            <input id="q" type="search" placeholder="Search by name...">
+        </label>
+
+        <div style="margin-left:auto" class="muted" id="count">Loading…</div>
+    </div>
+
+    <div id="msg" class="muted"></div>
+
+    <table id="files-table" aria-labelledby="files">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Language</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+    async function loadLibrary(){
+        try{
+            const res = await fetch('library.json', {cache: 'no-store'});
+            if(!res.ok) throw new Error('HTTP error ' + res.status);
+            return await res.json();
+        }catch(e){
+            document.getElementById('msg').textContent = 'Unable to load library.json: ' + e.message;
+            return null;
+        }
+    }
+
+    function populateSelect(id, items){
+        const sel = document.getElementById(id);
+        // clear existing (keep first 'All')
+        sel.length = 1;
+        items.forEach(it => {
+            const opt = document.createElement('option');
+            opt.value = it;
+            opt.textContent = it;
+            sel.appendChild(opt);
+        });
+    }
+
+    function renderRows(tbody, files, q, cat, lang){
+        tbody.innerHTML = '';
+        const lowq = (q||'').toLowerCase();
+        let shown = 0;
+        files.forEach(([key, item])=>{
+            const name = item.name || '';
+            const category = item.category || '';
+            const language = item.language || '';
+            if(cat && category !== cat) return;
+            if(lang && language !== lang) return;
+            if(lowq && !name.toLowerCase().includes(lowq) && !(item.id||'').toLowerCase().includes(lowq)) return;
+            const tr = document.createElement('tr');
+            const tdName = document.createElement('td');
+            const a = document.createElement('a');
+            a.textContent = name || (item.id || '');
+            a.target = '_blank';
+            // prefer files stored under PDF/ subfolder; fall back to root file
+            const candidate = 'PDF/' + (item.id || '');
+            a.href = encodeURI(candidate);
+            (async function resolveHref(anchor, id){
+                try{
+                    const head = await fetch(anchor.href, {method: 'HEAD'});
+                    if(!head.ok){
+                        anchor.href = encodeURI(id || '');
+                    }
+                }catch(e){
+                    try{
+                        const get = await fetch(anchor.href, {method: 'GET'});
+                        if(!get.ok) anchor.href = encodeURI(id || '');
+                    }catch(_){
+                        anchor.href = encodeURI(id || '');
+                    }
+                }
+            })(a, item.id || '');
+            tdName.appendChild(a);
+            tr.appendChild(tdName);
+
+            const tdCat = document.createElement('td'); tdCat.textContent = category; tr.appendChild(tdCat);
+            const tdLang = document.createElement('td'); tdLang.textContent = language; tr.appendChild(tdLang);
+
+            tbody.appendChild(tr);
+            shown++;
+        });
+        return shown;
+    }
+
+    (async function(){
+        const lib = await loadLibrary();
+        if(!lib) return;
+        const file_list = lib.file_list || {};
+        const cats = lib.category || [];
+        const langs = lib.language || [];
+
+        populateSelect('filter-category', cats);
+        populateSelect('filter-language', langs);
+
+        const tbody = document.querySelector('#files-table tbody');
+        const qel = document.getElementById('q');
+        const catEl = document.getElementById('filter-category');
+        const langEl = document.getElementById('filter-language');
+        const countEl = document.getElementById('count');
+
+        function update(){
+            const q = qel.value.trim();
+            const cat = catEl.value;
+            const lang = langEl.value;
+            const files = Object.entries(file_list);
+            const shown = renderRows(tbody, files, q, cat, lang);
+            // show total from library.json if present, else compute
+            const total = (lib.count && Number.isFinite(lib.count)) ? lib.count : files.length;
+            countEl.textContent = `${shown} / ${total} files`;
+        }
+
+        qel.addEventListener('input', update);
+        catEl.addEventListener('change', update);
+        langEl.addEventListener('change', update);
+
+        update();
+    })();
+    </script>
+</body>
+</html>
