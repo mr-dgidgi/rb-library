@@ -32,6 +32,10 @@
             <select id="filter-language"><option value="">All</option></select>
         </label>
 
+        <label>Type:
+            <select id="filter-type"><option value="">All</option></select>
+        </label>
+
         <label>Search:
             <input id="q" type="search" placeholder="Search by name...">
         </label>
@@ -47,6 +51,7 @@
                 <th>Name</th>
                 <th>Category</th>
                 <th>Language</th>
+                <th>Type</th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -76,7 +81,7 @@
         });
     }
 
-    function renderRows(tbody, files, q, cat, lang){
+    function renderRows(tbody, files, q, cat, lang, type){
         tbody.innerHTML = '';
         const lowq = (q||'').toLowerCase();
         let shown = 0;
@@ -84,8 +89,10 @@
             const name = item.name || '';
             const category = item.category || '';
             const language = item.language || '';
+            const typeValue = item.type || '';
             if(cat && category !== cat) return;
             if(lang && language !== lang) return;
+            if(type && typeValue !== type) return;
             if(lowq && !name.toLowerCase().includes(lowq) && !(item.id||'').toLowerCase().includes(lowq)) return;
             const tr = document.createElement('tr');
             const tdName = document.createElement('td');
@@ -115,6 +122,7 @@
 
             const tdCat = document.createElement('td'); tdCat.textContent = category; tr.appendChild(tdCat);
             const tdLang = document.createElement('td'); tdLang.textContent = language; tr.appendChild(tdLang);
+            const tdType = document.createElement('td'); tdType.textContent = typeValue; tr.appendChild(tdType);
 
             tbody.appendChild(tr);
             shown++;
@@ -128,22 +136,26 @@
         const file_list = lib.file_list || {};
         const cats = lib.category || [];
         const langs = lib.language || [];
+        const types = lib.type || [];
 
         populateSelect('filter-category', cats);
         populateSelect('filter-language', langs);
+        populateSelect('filter-type', types);
 
         const tbody = document.querySelector('#files-table tbody');
         const qel = document.getElementById('q');
         const catEl = document.getElementById('filter-category');
         const langEl = document.getElementById('filter-language');
+        const typeEl = document.getElementById('filter-type');
         const countEl = document.getElementById('count');
 
         function update(){
             const q = qel.value.trim();
             const cat = catEl.value;
             const lang = langEl.value;
+            const type = typeEl.value;
             const files = Object.entries(file_list);
-            const shown = renderRows(tbody, files, q, cat, lang);
+            const shown = renderRows(tbody, files, q, cat, lang, type);
             // show total from library.json if present, else compute
             const total = (lib.count && Number.isFinite(lib.count)) ? lib.count : files.length;
             countEl.textContent = `${shown} / ${total} files`;
@@ -152,6 +164,7 @@
         qel.addEventListener('input', update);
         catEl.addEventListener('change', update);
         langEl.addEventListener('change', update);
+        typeEl.addEventListener('change', update);
 
         update();
     })();

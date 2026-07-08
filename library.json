@@ -11,180 +11,213 @@
         "fr",
         "en"
     ],
+    "type": [
+        "book",
+        "printable"
+    ],
     "file_list": {
         "1": {
             "id": "99-trucs-pour-economiser-sans-trop-se-priver_inscriptible.pdf",
             "name": "99 trucs pour économiser sans trop se priver",
             "category": "economic",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         },
         "2": {
             "id": "Bricolage-conseils-installation-de-lelectricite-de-la-maison-By-Farpoint-Looker.pdf",
             "name": "Réussir votre installation électrique",
             "category": "crafting",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         },
         "3": {
             "id": "Collecte.eau_.de_.pluie_.a.usage_.domestique_par_Agrodok.pdf",
             "name": "La collecte de l'eau de pluie à usage domestique",
             "category": "crafting",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         },
         "4": {
             "id": "Comment-Survivre-France-1953.pdf",
             "name": "Comment survivre - 1953",
             "category": "survival",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         },
         "5": {
             "id": "Comment-bien-choisir-ses-chaussures-de-randonnée.pdf",
             "name": "Comment bien choisir ses chaussures de randonnée",
             "category": "survival",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         },
         "6": {
             "id": "Composter_au_jardin__c_est_facile.pdf",
             "name": "Composter au jardin, c'est facile",
             "category": "gardening",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         },
         "7": {
             "id": "Conservation-des-fruits-legumes-Agrodok.pdf",
             "name": "Conservation des fruits et légumes",
             "category": "cooking",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         },
         "8": {
             "id": "Conversation.poisson.et_.viande_par_Agrodok.pdf",
             "name": "Conservation du poisson et de la viande",
             "category": "cooking",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         },
         "9": {
             "id": "Coupe.pdf",
             "name": "Les outils de coupe",
             "category": "crafting",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         },
         "10": {
             "id": "Cuisine-De-Survie-Recettes.pdf",
-            "name": "Cuisine de Recette",
+            "name": "Cuisine de survie",
             "category": "cooking",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         },
         "11": {
             "id": "Decouverte.plantes.sauvages.comestibles_par_SavoureusesPlantesSauvages.pdf",
             "name": "Découverte des plantes sauvages commestibles",
             "category": "survival",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         },
         "12": {
             "id": "Demarche.francaise.de_.prevention.des_.risques.majeurs_par_Ministere_Francais.pdf",
             "name": "Démarche française de prévention des risques majeurs",
             "category": "survival",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         },
         "13": {
             "id": "Desinfection.eau_.potable.2006_by_EPA.GOV_.pdf",
             "name": "Désinfection de secours de l'eau potable",
             "category": "survival",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         },
         "14": {
             "id": "Eau.de_.boisson.du_.voyageur_par_Schlosser.pdf",
             "name": "L'eau de boisson du voyageur",
             "category": "survival",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         },
         "15": {
             "id": "FdN-vorgesorgt_fr.pdf",
-            "name": "Vous prévenir contre la situation d'Urgence - BBK",
+            "name": "Vous prévenir contre la situation d'urgence - BBK",
             "category": "survival",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         },
         "16": {
             "id": "GUIDE-DE-SURVIE-À-L’USAGE-DES-JOURNALISTES.pdf",
             "name": "Guide de survie à l'usage des journalistes",
             "category": "survival",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         },
         "17": {
             "id": "Gallauziaux-Thierry-Fedullo-David-Jacquelot-Maurice-La-plomberie.pdf",
             "name": "La plomberie - Comme Un Pro",
             "category": "crafting",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         },
         "18": {
             "id": "Guide-De-Survie-De-Randonnée-Dans-Le-Monde.pdf",
             "name": "Guide de survie de randonnée dans le monde",
             "category": "survival",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         },
         "19": {
             "id": "Guide_de_crochetage_OFC.pdf",
             "name": "Guide de crochetage",
             "category": "survival",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         },
         "20": {
             "id": "Guide_urgences.pdf",
             "name": "Guide d'urgence - Suisse",
             "category": "survival",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         },
         "21": {
             "id": "Hygiène-et-premiers-secours.pdf",
             "name": "Hygiène et premiers secours - Armée Française",
             "category": "health",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         },
         "22": {
             "id": "L_encyclopédie-des-Plantes.pdf",
             "name": "Le guide des verues traditionnelles des plantes et autres produits naturels",
             "category": "survival",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         },
         "23": {
             "id": "Le-Potager-Urbain.pdf",
             "name": "Le potager urbain",
             "category": "gardening",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         },
         "24": {
             "id": "Le-grand-menage-Recettes-ecologiques-et-zconomiques-pour-lentretien-de-la-maison.pdf",
             "name": "Recettes écologiques et économiques pour l'entretien de la maison",
             "category": "health",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         },
         "25": {
             "id": "Le-potager-sur-butte.pdf",
             "name": "Le potager sur butte",
             "category": "gardening",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         },
         "26": {
             "id": "Le_potager_synergique.pdf",
             "name": "Le potager synergique",
             "category": "gardening",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         },
         "27": {
             "id": "Les-techniques-de-camouflage-et-le-sniper.pdf",
             "name": "Les techniques de camouflage et le sniper",
             "category": "survival",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         },
         "28": {
             "id": "Liste_de_materiel_pour_la_randonnee.pdf",
             "name": "Liste de matériel pour la randonnée",
             "category": "survival",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         },
         "29": {
             "id": "LivrepratiqueduforgeroncoutelierparGerardHeutte.pdf",
-            "name": "Memento pratique de forge à l'usage du coutelier",
+            "name": "Mémento pratique de forge à l'usage du coutelier",
             "category": "crafting",
-            "language": "fr"
+            "language": "fr",
+            "type": "book"
         }
     },
     "count": 29

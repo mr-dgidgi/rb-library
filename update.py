@@ -42,6 +42,13 @@ def save_library(data, path: Path):
 		json.dump(data, f, ensure_ascii=False, indent=4)
 
 
+def ensure_default_lists(lib: dict):
+	"""Ensure known lists exist with default values used by the CLI."""
+	if not lib.get("type"):
+		lib["type"] = ["book", "printable"]
+	return lib
+
+
 def find_pdfs(directory: Path):
 	return sorted([p.name for p in directory.iterdir() if p.is_file() and p.suffix.lower() == ".pdf"])
 
@@ -92,12 +99,13 @@ def choose_from_known(prompt_label: str, options: list, lib_key: str, lib: dict)
 
 
 def cli_mode(root: Path, lib_path: Path):
-	lib = load_library(lib_path)
+	lib = ensure_default_lists(load_library(lib_path))
 	pdfs = find_pdfs(root)
 	changed = False
 
 	cats = lib.get("category", []) or []
 	langs = lib.get("language", []) or []
+	types = lib.get("type", []) or []
 
 	for pdf in pdfs:
 		if is_present(lib, pdf):
@@ -117,12 +125,18 @@ def cli_mode(root: Path, lib_path: Path):
 			print("Category cannot be empty.")
 			category = choose_from_known("category", cats, "category", lib)
 
+		type_value = choose_from_known("type", types, "type", lib)
+		while not type_value:
+			print("Type cannot be empty.")
+			type_value = choose_from_known("type", types, "type", lib)
+
 		key = next_key(lib)
 		lib.setdefault("file_list", {})[key] = {
 			"id": pdf,
 			"name": name,
 			"category": category,
 			"language": language,
+			"type": type_value,
 		}
 		print(f"Added entry under key {key}.")
 		# Save immediately to avoid data loss if interrupted
