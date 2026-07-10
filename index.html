@@ -58,13 +58,23 @@
     </table>
 
     <script>
-    async function loadLibrary(){
+    async function loadLibrary(path, label){
         try{
-            const res = await fetch('library.json', {cache: 'no-store'});
-            if(!res.ok) throw new Error('HTTP error ' + res.status);
+            const res = await fetch(path, {cache: 'no-store'});
+            if(!res.ok) {
+                if(label === 'custom-library.json' && res.status === 404){
+                    return null;
+                }
+                throw new Error('HTTP error ' + res.status);
+            }
             return await res.json();
         }catch(e){
-            document.getElementById('msg').textContent = 'Unable to load library.json: ' + e.message;
+            if(label === 'custom-library.json' && e.message.includes('404')){
+                return null;
+            }
+            const msgEl = document.getElementById('msg');
+            const message = 'Unable to load ' + label + ': ' + e.message;
+            msgEl.textContent = msgEl.textContent ? msgEl.textContent + ' ' + message : message;
             return null;
         }
     }
@@ -85,7 +95,7 @@
         tbody.innerHTML = '';
         const lowq = (q||'').toLowerCase();
         let shown = 0;
-        files.forEach(([key, item])=>{
+        files.forEach(({key, item, source})=>{
             const name = item.name || '';
             const category = item.category || '';
             const language = item.language || '';
@@ -99,24 +109,25 @@
             const a = document.createElement('a');
             a.textContent = name || (item.id || '');
             a.target = '_blank';
-            // prefer files stored under PDF/ subfolder; fall back to root file
-            const candidate = 'PDF/' + (item.id || '');
-            a.href = encodeURI(candidate);
-            (async function resolveHref(anchor, id){
-                try{
-                    const head = await fetch(anchor.href, {method: 'HEAD'});
-                    if(!head.ok){
-                        anchor.href = encodeURI(id || '');
-                    }
-                }catch(e){
+            const basePath = source === 'custom' ? 'PDF/custom/' : 'PDF/';
+            const candidates = source === 'custom'
+                ? [basePath + (item.id || ''), item.id || '']
+                : ['PDF/' + (item.id || ''), 'PDF/custom/' + (item.id || ''), item.id || ''];
+            a.href = encodeURI(candidates[0]);
+            (async function resolveHref(anchor, candidates){
+                for (const candidate of candidates){
                     try{
-                        const get = await fetch(anchor.href, {method: 'GET'});
-                        if(!get.ok) anchor.href = encodeURI(id || '');
-                    }catch(_){
-                        anchor.href = encodeURI(id || '');
+                        const head = await fetch(candidate, {method: 'HEAD'});
+                        if(head.ok){
+                            anchor.href = encodeURI(candidate);
+                            return;
+                        }
+                    }catch(e){
+                        // ignore and try next candidate
                     }
                 }
-            })(a, item.id || '');
+                anchor.href = encodeURI(candidates[candidates.length - 1] || '');
+            })(a, candidates);
             tdName.appendChild(a);
             tr.appendChild(tdName);
 
@@ -131,12 +142,16 @@
     }
 
     (async function(){
-        const lib = await loadLibrary();
-        if(!lib) return;
-        const file_list = lib.file_list || {};
-        const cats = lib.category || [];
-        const langs = lib.language || [];
-        const types = lib.type || [];
+        const lib = await loadLibrary('library.json', 'library.json');
+        const customLib = await loadLibrary('custom-library.json', 'custom-library.json');
+        if(!lib && !customLib) return;
+        const file_list = [
+            ...Object.entries(lib?.file_list || {}).map(([key, item]) => ({key, item, source: 'main'})),
+            ...Object.entries(customLib?.file_list || {}).map(([key, item]) => ({key, item, source: 'custom'}))
+        ];
+        const cats = Array.from(new Set([...(lib?.category || []), ...(customLib?.category || [])]));
+        const langs = Array.from(new Set([...(lib?.language || []), ...(customLib?.language || [])]));
+        const types = Array.from(new Set([...(lib?.type || []), ...(customLib?.type || [])]));
 
         populateSelect('filter-category', cats);
         populateSelect('filter-language', langs);
@@ -154,10 +169,8 @@
             const cat = catEl.value;
             const lang = langEl.value;
             const type = typeEl.value;
-            const files = Object.entries(file_list);
-            const shown = renderRows(tbody, files, q, cat, lang, type);
-            // show total from library.json if present, else compute
-            const total = (lib.count && Number.isFinite(lib.count)) ? lib.count : files.length;
+            const shown = renderRows(tbody, file_list, q, cat, lang, type);
+            const total = (Number(lib?.count || 0) + Number(customLib?.count || 0)) || file_list.length;
             countEl.textContent = `${shown} / ${total} files`;
         }
 

@@ -1,13 +1,14 @@
 
 #!/usr/bin/env python3
-"""Update library.json by scanning PDFs and interactively adding missing entries.
+"""Update library data by scanning PDFs and interactively adding missing entries.
 
 Usage:
 	python update.py            # CLI mode (interactive)
 
-The script looks for `library.json` in the same folder and scans the current
-directory for PDF files. For each PDF not already listed in `file_list`, it
-asks the user for a name, language and category, then appends the entry.
+The script looks for `library.json` and `custom-library.json` in the same
+folder and scans the `PDF` and `PDF/custom` subdirectories for PDF files.
+For each PDF not already listed in the relevant `file_list`, it asks the user
+for a name, language and category, then appends the entry.
 """
 
 from pathlib import Path
@@ -49,8 +50,23 @@ def ensure_default_lists(lib: dict):
 	return lib
 
 
-def find_pdfs(directory: Path):
-	return sorted([p.name for p in directory.iterdir() if p.is_file() and p.suffix.lower() == ".pdf"])
+def find_pdfs(root: Path):
+	pdf_dirs = [
+		(root / "PDF", False),
+		(root / "PDF" / "custom", True),
+	]
+	files = []
+	custom_files = []
+	for directory, is_custom in pdf_dirs:
+		if not directory.exists():
+			continue
+		for p in directory.iterdir():
+			if p.is_file() and p.suffix.lower() == ".pdf":
+				if is_custom:
+					custom_files.append(p.name)
+				else:
+					files.append(p.name)
+	return sorted(files), sorted(custom_files)
 
 
 def is_present(lib, filename: str):
@@ -98,40 +114,48 @@ def choose_from_known(prompt_label: str, options: list, lib_key: str, lib: dict)
 		return val
 
 
-def cli_mode(root: Path, lib_path: Path):
+def cli_mode(root: Path, lib_path: Path, custom_lib_path: Path):
 	lib = ensure_default_lists(load_library(lib_path))
-	pdfs = find_pdfs(root)
+	custom_lib = ensure_default_lists(load_library(custom_lib_path))
+	pdfs, custom_pdfs = find_pdfs(root)
 	changed = False
 
-	cats = lib.get("category", []) or []
-	langs = lib.get("language", []) or []
-	types = lib.get("type", []) or []
-
-	for pdf in pdfs:
-		if is_present(lib, pdf):
-			continue
-		print(f"\nFound new PDF: {pdf}")
+	def process_pdf(pdf: str, target_lib: dict, target_path: Path, label: str):
+		nonlocal changed
+		if is_present(target_lib, pdf):
+			return
+		print(f"\nFound new PDF for {label}: {pdf}")
 		default_name = Path(pdf).stem.replace("_", " ")
 		name = prompt_with_default("Name", default_name)
 
+		cats = target_lib.get("category", []) or []
+		langs = target_lib.get("language", []) or []
+		types = target_lib.get("type", []) or []
+		if not cats and lib.get("category"):
+			cats = lib.get("category", []) or []
+		if not langs and lib.get("language"):
+			langs = lib.get("language", []) or []
+		if not types and lib.get("type"):
+			types = lib.get("type", []) or []
+
 		# Validate language and category against known lists (allow adding new)
-		language = choose_from_known("language", langs, "language", lib)
+		language = choose_from_known("language", langs, "language", target_lib)
 		while not language:
 			print("Language cannot be empty.")
-			language = choose_from_known("language", langs, "language", lib)
+			language = choose_from_known("language", langs, "language", target_lib)
 
-		category = choose_from_known("category", cats, "category", lib)
+		category = choose_from_known("category", cats, "category", target_lib)
 		while not category:
 			print("Category cannot be empty.")
-			category = choose_from_known("category", cats, "category", lib)
+			category = choose_from_known("category", cats, "category", target_lib)
 
-		type_value = choose_from_known("type", types, "type", lib)
+		type_value = choose_from_known("type", types, "type", target_lib)
 		while not type_value:
 			print("Type cannot be empty.")
-			type_value = choose_from_known("type", types, "type", lib)
+			type_value = choose_from_known("type", types, "type", target_lib)
 
-		key = next_key(lib)
-		lib.setdefault("file_list", {})[key] = {
+		key = next_key(target_lib)
+		target_lib.setdefault("file_list", {})[key] = {
 			"id": pdf,
 			"name": name,
 			"category": category,
@@ -140,13 +164,19 @@ def cli_mode(root: Path, lib_path: Path):
 		}
 		print(f"Added entry under key {key}.")
 		# Save immediately to avoid data loss if interrupted
-		save_library(lib, lib_path)
-		print(f"library.json updated (saved after adding key {key}).")
+		save_library(target_lib, target_path)
+		print(f"{target_path.name} updated (saved after adding key {key}).")
 		changed = True
 
+	for pdf in pdfs:
+		process_pdf(pdf, lib, lib_path, "main library")
+
+	for pdf in custom_pdfs:
+		process_pdf(pdf, custom_lib, custom_lib_path, "custom library")
+
 	if changed:
-		save_library(lib, lib_path)
 		print(f"library.json updated: {lib_path}")
+		print(f"custom-library.json updated: {custom_lib_path}")
 	else:
 		print("No new PDFs to add.")
 
@@ -156,13 +186,15 @@ def cli_mode(root: Path, lib_path: Path):
 
 def main():
 	parser = argparse.ArgumentParser(description="Update library.json from PDFs (CLI only)")
-	parser.add_argument("--dir", default=".", help="Directory to scan for PDFs")
+	parser.add_argument("--dir", default=None, help="Root directory to scan for PDFs. Defaults to the script directory.")
 	args = parser.parse_args()
 
-	root = Path(args.dir).resolve()
-	lib_path = Path(__file__).resolve().parent / "library.json"
+	script_dir = Path(__file__).resolve().parent
+	root = Path(args.dir).resolve() if args.dir else script_dir
+	lib_path = script_dir / "library.json"
+	custom_lib_path = script_dir / "custom-library.json"
 
-	cli_mode(root, lib_path)
+	cli_mode(root, lib_path, custom_lib_path)
 
 
 if __name__ == "__main__":

@@ -178,7 +178,7 @@
             "type": "book"
         },
         "24": {
-            "id": "Le-grand-menage-Recettes-ecologiques-et-zconomiques-pour-lentretien-de-la-maison.pdf",
+            "id": "le-grand-menage-4.pdf",
             "name": "Recettes écologiques et économiques pour l'entretien de la maison",
             "category": "health",
             "language": "fr",
@@ -218,7 +218,826 @@
             "category": "crafting",
             "language": "fr",
             "type": "book"
+        },
+        "30": {
+            "id": "Basic-Emergency-Plan.pdf",
+            "name": "Basic emergency plan",
+            "category": "survival",
+            "language": "en",
+            "type": "printable"
+        },
+        "31": {
+            "id": "Be-Prepared-Estonia-Crisis-Guide-Paasteamet-ERB.pdf",
+            "name": "Be Prepared - Crisis guide - Estonia",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "32": {
+            "id": "Boy-Scout-Handbook-1911.pdf",
+            "name": "Boy-Scout handbook - 1911",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "33": {
+            "id": "Bug-Out-Bag-Checklist-v3-2-Page.pdf",
+            "name": "Bug out bag checklist",
+            "category": "survival",
+            "language": "en",
+            "type": "printable"
+        },
+        "34": {
+            "id": "Bug-Out-Vehicle-Checklist-v3.pdf",
+            "name": "Bug out vehicle checklist",
+            "category": "survival",
+            "language": "en",
+            "type": "printable"
+        },
+        "35": {
+            "id": "Build-a-Protective-Fallout-Shelter.pdf",
+            "name": "Build a protective fallout shelter",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "36": {
+            "id": "CIA-RDP78-Introdution-to-Survival.pdf",
+            "name": "Introduction to survival - CIA-RDP78",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "37": {
+            "id": "Canadian-Military-Basic-Cold-Weather-Training.pdf",
+            "name": "Basic cold weather training - Canadian Army",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "38": {
+            "id": "Canadian-Military-Fieldcraft.pdf",
+            "name": "Fieldcraft - Canadian Army",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "39": {
+            "id": "Car-Emergency-Kit-Checklist-v3.pdf",
+            "name": "Car emergency kit",
+            "category": "survival",
+            "language": "en",
+            "type": "printable"
+        },
+        "40": {
+            "id": "DTRA-Collateral-Damage-to-Satellites-from-an-EMP-Attack.pdf",
+            "name": "Collateral damage to satellites drom EMP",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "41": {
+            "id": "Deadfalls-and-Snares.pdf",
+            "name": "Deadfalls and Snares - traps",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "42": {
+            "id": "DoD-Emergency-Preparedness-Guide.pdf",
+            "name": "Emergency preparedness guide - DoD",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "43": {
+            "id": "Dog-Bug-Out-Bag-Checklist-v3.pdf",
+            "name": "Bug out dog bag - Checklist",
+            "category": "survival",
+            "language": "en",
+            "type": "printable"
+        },
+        "44": {
+            "id": "Down-But-Not-Out-Canadian-Survival-Manual.pdf",
+            "name": "Down but not out",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "45": {
+            "id": "Everyday-Carry-Checklist-v3-2-Page.pdf",
+            "name": "Everyday carry - Checklist",
+            "category": "survival",
+            "language": "en",
+            "type": "printable"
+        },
+        "46": {
+            "id": "FEMA-Citizen-Preparedness-Guide.pdf",
+            "name": "Citizen Preparedness Guide - FEMA",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "47": {
+            "id": "FM-20-3-Camouflage-Concealment-and-Decoys.pdf",
+            "name": "Camouflage, concealment and decoy - FM-20-3",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "48": {
+            "id": "FM-21-10-Field-Hygiene-and-Sanitation.pdf",
+            "name": "Field hygiene and sanitation - FM-21-10",
+            "category": "health",
+            "language": "en",
+            "type": "book"
+        },
+        "49": {
+            "id": "FM-21-76-1-Survival-Evasion-and-Recovery-Multiservice-Procedures.pdf",
+            "name": "Survival, evasion and recovery - FM-21-76",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "50": {
+            "id": "FM-21-76-US-Army-Survival-Manual.pdf",
+            "name": "US Army survival manuel - FM-21-76",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "51": {
+            "id": "FM-3-06-Urban-Operations-FM-90-10-US-Army.pdf",
+            "name": "Urban operation - FM-3-06",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "52": {
+            "id": "FM-3-25-150-Combatives.pdf",
+            "name": "Combative - FM-3-25.150",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "53": {
+            "id": "FM-3-25-26-Map-Reading-and-Land-Navigation.pdf",
+            "name": "Map reading and land navigation - FM-3-25.26",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "54": {
+            "id": "FM-3-3-1-Nuclear-Contamination-Avoidance.pdf",
+            "name": "Nuclear Contamination Avoidance - FM-3-3-1",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "55": {
+            "id": "FM-3-4-NBC-Protection.pdf",
+            "name": "NBC protection - FM-3-4",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "56": {
+            "id": "FM-3-5-NBC-Decontamination.pdf",
+            "name": "NBC decontamination - FM-3-5",
+            "category": "health",
+            "language": "en",
+            "type": "book"
+        },
+        "57": {
+            "id": "FM-31-70-Basic-Cold-Weather-Manual.pdf",
+            "name": "Basic cold weather manual - FM-31-70",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "58": {
+            "id": "FM-4-25-11-First_Aid.pdf",
+            "name": "First aid - FM-4-25.11",
+            "category": "health",
+            "language": "en",
+            "type": "book"
+        },
+        "59": {
+            "id": "FM-5-103-Survivability.pdf",
+            "name": "Survivability - FM-5-103",
+            "category": "crafting",
+            "language": "en",
+            "type": "book"
+        },
+        "60": {
+            "id": "FMFRP-12-80-USMC-Kill-or-Get-Killed.pdf",
+            "name": "Kill or get killed - USMC",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "61": {
+            "id": "Family-Shelter-Designs-DOD-Civil-Defense.pdf",
+            "name": "Family shelter designs - DoD",
+            "category": "crafting",
+            "language": "en",
+            "type": "book"
+        },
+        "62": {
+            "id": "Flood-Survival-Kit-Checklist-v3.pdf",
+            "name": "Flood survival kit - Checklist",
+            "category": "survival",
+            "language": "en",
+            "type": "printable"
+        },
+        "63": {
+            "id": "Get-Home-Bag-Checklist-v3-2-Page.pdf",
+            "name": "Get home bag - Checklist",
+            "category": "survival",
+            "language": "en",
+            "type": "printable"
+        },
+        "64": {
+            "id": "Home-Survival-Kit-Checklist-v3-2-Page.pdf",
+            "name": "Home survival kit - Checklist",
+            "category": "survival",
+            "language": "en",
+            "type": "printable"
+        },
+        "65": {
+            "id": "Hurricane-Survival-Kit-Checklist.pdf",
+            "name": "Hurrican survival kit - Checklist",
+            "category": "survival",
+            "language": "en",
+            "type": "printable"
+        },
+        "66": {
+            "id": "INCH-Bag-Checklist-v2-2-Page-1.pdf",
+            "name": "INCH bag - Checklist",
+            "category": "survival",
+            "language": "en",
+            "type": "printable"
+        },
+        "67": {
+            "id": "Kids-Bug-Out-Bag-Checklist-v3.pdf",
+            "name": "Bug out bag kid - Checklist",
+            "category": "survival",
+            "language": "en",
+            "type": "printable"
+        },
+        "68": {
+            "id": "MA-1.02-USMC-Fundamentals-of-Martial-Arts.pdf",
+            "name": "Fundamentals of martial arts - USMC",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "69": {
+            "id": "Magrou-Rafaâl-Habiter-un-container.pdf",
+            "name": "Habiter un container",
+            "category": "crafting",
+            "language": "fr",
+            "type": "book"
+        },
+        "70": {
+            "id": "Making_Pure_Corn_Whiskey_A_Professional_Guide_for_Amateur_Distillers.pdf",
+            "name": "Making pure corn whiskey",
+            "category": "cooking",
+            "language": "en",
+            "type": "book"
+        },
+        "71": {
+            "id": "Manuel-de-Préparation-aux-Situations-d_Urgence.pdf",
+            "name": "Manuel de préparation aux situations d'urgence",
+            "category": "survival",
+            "language": "fr",
+            "type": "book"
+        },
+        "72": {
+            "id": "Manuel-de-survie-des-forces-spéciales.pdf",
+            "name": "Manuel de survie des forces spéciales",
+            "category": "survival",
+            "language": "fr",
+            "type": "book"
+        },
+        "73": {
+            "id": "Manuel-des-jardiniers-3.0.pdf",
+            "name": "Manuel des jardiniers sans moyens",
+            "category": "gardening",
+            "language": "fr",
+            "type": "book"
+        },
+        "74": {
+            "id": "Memento_survie_nature_p.impaires_par_Silex.pdf",
+            "name": "Memento de survie en milieu naturel",
+            "category": "survival",
+            "language": "fr",
+            "type": "book"
+        },
+        "75": {
+            "id": "Mon-petit-guide-de-survie.pdf",
+            "name": "Mon petit guide de survie",
+            "category": "survival",
+            "language": "fr",
+            "type": "book"
+        },
+        "76": {
+            "id": "Médecine-D_urgence.pdf",
+            "name": "Médecine d'urgence",
+            "category": "health",
+            "language": "fr",
+            "type": "book"
+        },
+        "77": {
+            "id": "NAVMED-P-5010-US-Navy-Manual-of-Preventive-Medicine.pdf",
+            "name": "Manual of preventive medicine - USN",
+            "category": "health",
+            "language": "en",
+            "type": "book"
+        },
+        "78": {
+            "id": "Noeuds_Synthese.pdf",
+            "name": "Les noeuds",
+            "category": "crafting",
+            "language": "fr",
+            "type": "book"
+        },
+        "79": {
+            "id": "Norway-One-Week-Preparedness-Guide.pdf",
+            "name": "One week preparedness guide - Norway",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "80": {
+            "id": "Nuclear-Survival-Kit-Checklist-v3.pdf",
+            "name": "Nuclear survival kit - Checklist",
+            "category": "survival",
+            "language": "en",
+            "type": "printable"
+        },
+        "81": {
+            "id": "Nuclear-War-Survival-Skills-Cresson-Kearny.pdf",
+            "name": "Nuclear war survival skills",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "82": {
+            "id": "Nuclear-Winter-The-Anthropology-of-Human-Survival.pdf",
+            "name": "Nuclear Winter",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "83": {
+            "id": "Paleo-Pocalypse.pdf",
+            "name": "Paleo-Pocalypse",
+            "category": "crafting",
+            "language": "en",
+            "type": "book"
+        },
+        "84": {
+            "id": "Personal-and-Family-Survival-SM-3-11.pdf",
+            "name": "Personal and family survival - DoD",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "85": {
+            "id": "Pfms.pdf",
+            "name": "Je me protège en famille",
+            "category": "survival",
+            "language": "fr",
+            "type": "book"
+        },
+        "86": {
+            "id": "Physique-Technique-La-Refrigeration-Solaire-A-Adsorption.pdf",
+            "name": "La réfrigération solaire à adsorbsion",
+            "category": "crafting",
+            "language": "fr",
+            "type": "book"
+        },
+        "87": {
+            "id": "Piven-Joshua-Borgenicht-David-Manuel-de-survie.pdf",
+            "name": "Manuel de survie",
+            "category": "survival",
+            "language": "fr",
+            "type": "book"
+        },
+        "88": {
+            "id": "Planning-Guidance-for-Response-to-Nuclear-Detonation-May-2022-FEMA.pdf",
+            "name": "Response to a nuclear detonation - FEMA",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "89": {
+            "id": "Printable-PDF-of-the-Military-Phonetic-Alphabet.pdf",
+            "name": "Phonetic Alphabet",
+            "category": "survival",
+            "language": "en",
+            "type": "printable"
+        },
+        "90": {
+            "id": "Printable-PDF-of-the-Universal-Edibility-Test-for-Survival.pdf",
+            "name": "Universal edibility test - plants",
+            "category": "survival",
+            "language": "en",
+            "type": "printable"
+        },
+        "91": {
+            "id": "Production.de_.semences.a.petite.echelle_v2004_par_Agrodok.pdf",
+            "name": "Production de semences à petite échelle - Agrodok",
+            "category": "gardening",
+            "language": "fr",
+            "type": "book"
+        },
+        "92": {
+            "id": "Psychologie-du-combat-1.pdf",
+            "name": "La psychologie du combat",
+            "category": "survival",
+            "language": "fr",
+            "type": "book"
+        },
+        "93": {
+            "id": "Reussir_ses_Semis_Comme_Un_Pro.pdf",
+            "name": "Réussir ses semis comme un pro",
+            "category": "gardening",
+            "language": "fr",
+            "type": "book"
+        },
+        "94": {
+            "id": "SCARE-Bag-Checklist-v3.pdf",
+            "name": "SCARE bag - Checklist",
+            "category": "survival",
+            "language": "en",
+            "type": "printable"
+        },
+        "95": {
+            "id": "ST-31-91B-US-Army-Special-Forces-Medical-Handbook.pdf",
+            "name": "Special force medical handbook",
+            "category": "health",
+            "language": "en",
+            "type": "book"
+        },
+        "96": {
+            "id": "STP-21-1-Army-Warrior-Skills-Level-1-Soldiers-Manual-of-Common-Tasks.pdf",
+            "name": "Warrior skills level 1",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "97": {
+            "id": "STP-21-24-Army-Warrior-Leader-Skills-Level-2-3-and-4.pdf",
+            "name": "Warrior leader level 2, 3 and 4",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "98": {
+            "id": "Shelters-Shacks-and-Shanties.pdf",
+            "name": "Shelters, shacks and shanties",
+            "category": "crafting",
+            "language": "en",
+            "type": "book"
+        },
+        "99": {
+            "id": "Survival-First-Aid-Kit-Checklist-v3.pdf",
+            "name": "First aid kit - Checklist",
+            "category": "health",
+            "language": "en",
+            "type": "printable"
+        },
+        "100": {
+            "id": "Survival-Food-Checklist-v3.pdf",
+            "name": "Survival food - Checklist",
+            "category": "cooking",
+            "language": "en",
+            "type": "printable"
+        },
+        "101": {
+            "id": "Survivre-a-40-sous-zero-FRENCH.pdf",
+            "name": "Survive à 40 sous zéro",
+            "category": "survival",
+            "language": "fr",
+            "type": "book"
+        },
+        "102": {
+            "id": "Sweden-In-Case-of-Crisis-or-War.pdf",
+            "name": "In case of crisis or war - Sweden",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "103": {
+            "id": "TCCC-17-13-Army-Tactical-Combat-Casualty-Care.pdf",
+            "name": "Tactical combat casuality care",
+            "category": "health",
+            "language": "en",
+            "type": "book"
+        },
+        "104": {
+            "id": "TM-31-210-Improvised-Munitions-Handbook.pdf",
+            "name": "Improvised munitions",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "105": {
+            "id": "Technique-De-Noeud.pdf",
+            "name": "Techniques de noeuds",
+            "category": "survival",
+            "language": "fr",
+            "type": "book"
+        },
+        "106": {
+            "id": "Trucs.et_.astuces.de_.pose_.de_.pieges.pdf",
+            "name": "Trucs et astuces de pose de pièges",
+            "category": "survival",
+            "language": "fr",
+            "type": "book"
+        },
+        "107": {
+            "id": "Tyrode-Yves-Manuel-de-survie.pdf",
+            "name": "Manuel de survie - Comment réagir",
+            "category": "survival",
+            "language": "fr",
+            "type": "book"
+        },
+        "108": {
+            "id": "UK-National-Risk-Register-2025.pdf",
+            "name": "National risk register - UK",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "109": {
+            "id": "US-Antarctic-Continental-Field-Manual.pdf",
+            "name": "Antartic continental field manual",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "110": {
+            "id": "US-National-Risk-Index-2025.pdf",
+            "name": "National risk index - US",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "111": {
+            "id": "USMC-Summer-Survival-Course-Handbook.pdf",
+            "name": "Summer survival - USMC",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "112": {
+            "id": "USMC-Winter-Survival-Course-Handbook.pdf",
+            "name": "Winter survival - USMC",
+            "category": "survival",
+            "language": "en",
+            "type": "book"
+        },
+        "113": {
+            "id": "Usage-de-l_eau-de-pluie-CLAN9-Survie-survivalisme-survivaliste-survival-biologique-santé.pdf",
+            "name": "Les usages de l'eau de pluie",
+            "category": "crafting",
+            "language": "fr",
+            "type": "book"
+        },
+        "114": {
+            "id": "VDMC_survie_urbaine_sfs.pdf",
+            "name": "Vade-mecum de survie urbaine en zone occupée",
+            "category": "survival",
+            "language": "fr",
+            "type": "book"
+        },
+        "115": {
+            "id": "WUSH-Bag-Checklist-v3.pdf",
+            "name": "WUSH bag - Checklist",
+            "category": "survival",
+            "language": "en",
+            "type": "printable"
+        },
+        "116": {
+            "id": "Where-There-is-No-Dentist.pdf",
+            "name": "Where there is no dentist",
+            "category": "health",
+            "language": "en",
+            "type": "book"
+        },
+        "117": {
+            "id": "Where-There-is-no-Doctor-a-Village-Health-Care-Handbook.pdf",
+            "name": "Where there is no doctor",
+            "category": "health",
+            "language": "en",
+            "type": "book"
+        },
+        "118": {
+            "id": "agrodok.-la-pisciculture.pdf",
+            "name": "La pisciculture - Agrodok",
+            "category": "gardening",
+            "language": "fr",
+            "type": "book"
+        },
+        "119": {
+            "id": "armee_americaine.pdf",
+            "name": "Le guide de survie de l'armée américaine",
+            "category": "survival",
+            "language": "fr",
+            "type": "book"
+        },
+        "120": {
+            "id": "axemanual.pdf",
+            "name": "Axe manual",
+            "category": "crafting",
+            "language": "fr",
+            "type": "book"
+        },
+        "121": {
+            "id": "carcajou1.pdf",
+            "name": "Carcajou - no1",
+            "category": "survival",
+            "language": "fr",
+            "type": "book"
+        },
+        "122": {
+            "id": "carcajou2.pdf",
+            "name": "Carcajou - no2",
+            "category": "survival",
+            "language": "fr",
+            "type": "book"
+        },
+        "123": {
+            "id": "carcajou3.pdf",
+            "name": "Carcajou - no3",
+            "category": "survival",
+            "language": "fr",
+            "type": "book"
+        },
+        "124": {
+            "id": "carcajou4.pdf",
+            "name": "Carcajou - no4",
+            "category": "survival",
+            "language": "fr",
+            "type": "book"
+        },
+        "125": {
+            "id": "conseils-pratiques-en-foret.pdf",
+            "name": "Conseils pratiques en forêt - Canada",
+            "category": "survival",
+            "language": "fr",
+            "type": "book"
+        },
+        "126": {
+            "id": "conserves-et-conservations.pdf",
+            "name": "Conserves et conservations",
+            "category": "cooking",
+            "language": "fr",
+            "type": "book"
+        },
+        "127": {
+            "id": "culture-champignons.pdf",
+            "name": "Culture de champignons sur billots et souches",
+            "category": "gardening",
+            "language": "fr",
+            "type": "book"
+        },
+        "128": {
+            "id": "culturechampignonbillot.pdf",
+            "name": "Culture de champignons en sous-bois",
+            "category": "gardening",
+            "language": "fr",
+            "type": "book"
+        },
+        "129": {
+            "id": "documentation_jardin_le_secret_pour_des_vraies_plantes_aromatiques_1.pdf",
+            "name": "Le secret pour des vraies plantes aromatiques",
+            "category": "gardening",
+            "language": "fr",
+            "type": "book"
+        },
+        "130": {
+            "id": "elevage-escargots.pdf",
+            "name": "L'élevage d'escargots - Agrodok",
+            "category": "gardening",
+            "language": "fr",
+            "type": "book"
+        },
+        "131": {
+            "id": "expertise_survie.pdf",
+            "name": "Développement de l'expertise en survie",
+            "category": "survival",
+            "language": "fr",
+            "type": "book"
+        },
+        "132": {
+            "id": "faites-votre-biere.pdf",
+            "name": "Faites votre bière",
+            "category": "cooking",
+            "language": "fr",
+            "type": "book"
+        },
+        "133": {
+            "id": "feux.pdf",
+            "name": "Les feux, techniques et sécurité",
+            "category": "survival",
+            "language": "fr",
+            "type": "book"
+        },
+        "134": {
+            "id": "fiche-pratique-astuces-marc-de-cafe-maison-et-jardin.pdf",
+            "name": "Astuces avec le marc de café",
+            "category": "health",
+            "language": "fr",
+            "type": "printable"
+        },
+        "135": {
+            "id": "guide-du-permaculteur-debutant.pdf",
+            "name": "Le guide du permaculteur débutant",
+            "category": "gardening",
+            "language": "fr",
+            "type": "book"
+        },
+        "136": {
+            "id": "guide-ecoconstruction-CLAN9-Survie-survivalisme-survivaliste-survival-biologique-santé.pdf",
+            "name": "Guide de l'écoconstruction",
+            "category": "crafting",
+            "language": "fr",
+            "type": "book"
+        },
+        "137": {
+            "id": "guide-pratique-mon-jardin-malin.pdf",
+            "name": "Guide pratique - Mon jardin malin",
+            "category": "gardening",
+            "language": "fr",
+            "type": "book"
+        },
+        "138": {
+            "id": "premiers_secours.pdf",
+            "name": "Premiers secours - Novartis",
+            "category": "health",
+            "language": "fr",
+            "type": "book"
+        },
+        "139": {
+            "id": "remedes-anciens.pdf",
+            "name": "Remèdes anciens",
+            "category": "health",
+            "language": "fr",
+            "type": "book"
+        },
+        "140": {
+            "id": "reperes2_vf.pdf",
+            "name": "R.E.P.E.R.E.S - CEETS",
+            "category": "survival",
+            "language": "fr",
+            "type": "book"
+        },
+        "141": {
+            "id": "toilettes-seches-guide-annexes.pdf",
+            "name": "Bonnes pratiques pour le compostage des sous-produits de toilettes sèches",
+            "category": "crafting",
+            "language": "fr",
+            "type": "book"
+        },
+        "142": {
+            "id": "traitement-et-stockage-eau-domicile-.pdf",
+            "name": "Traitement et stockage de l'eau à domicile",
+            "category": "health",
+            "language": "fr",
+            "type": "book"
+        },
+        "143": {
+            "id": "werner-david-la-ou-il-n-y-a-pas-de-docteur.pdf",
+            "name": "Là où il n'y a pas de docteur",
+            "category": "health",
+            "language": "fr",
+            "type": "book"
+        },
+        "144": {
+            "id": "GOBAG.pdf",
+            "name": "Go Bag - CEETS",
+            "category": "survival",
+            "language": "fr",
+            "type": "book"
+        },
+        "145": {
+            "id": "LivretResilienceCitoyenneCEETS.pdf",
+            "name": "Livret de résilicence citoyenne - CEETS",
+            "category": "survival",
+            "language": "fr",
+            "type": "book"
+        },
+        "146": {
+            "id": "checklist_prepa.pdf",
+            "name": "Autoévaluation du niveau de préparation - CEETS",
+            "category": "survival",
+            "language": "fr",
+            "type": "printable"
         }
     },
-    "count": 29
+    "count": 146
 }
