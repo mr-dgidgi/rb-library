@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>RecoveryBox Library</title>
+    <style>
+        body { font-family: system-ui, sans-serif; background: #0f1720; color: #e6eef3; padding: 24px; }
+        h1 { color: #ffcc00; margin: 0 0 12px 0 }
+        .controls { display:flex; gap:12px; align-items:center; margin: 12px 0 18px 0 }
+        select,input[type="search"] { padding:6px 8px; border-radius:6px; border:1px solid #233; background:#0b1220; color:#e6eef3 }
+        table { width:100%; border-collapse:collapse; background:#071018; margin-top:8px }
+        th,td { padding:10px 12px; border-bottom:1px solid #122233; text-align:left }
+        th { background:#071826; color:#9fe3a2 }
+        tr:nth-child(even) td { background:#06121a }
+        a { color:#8feea1; text-decoration:none }
+        a:hover { text-decoration:underline }
+        .muted { color:#99a0a6 }
+        .summary { margin-top:6px; color:#cfe8d6 }
+        @media (max-width:720px){ .controls{flex-direction:column;align-items:stretch} td,th{padding:8px} }
+    </style>
+</head>
+<body>
+    <h1>RecoveryBox Library</h1>
+
+    <div class="controls">
+        <label>Category:
+            <select id="filter-category"><option value="">All</option></select>
+        </label>
+
+        <label>Language:
+            <select id="filter-language"><option value="">All</option></select>
+        </label>
+
+        <label>Type:
+            <select id="filter-type"><option value="">All</option></select>
+        </label>
+
+        <label>Search:
+            <input id="q" type="search" placeholder="Search by name...">
+        </label>
+
+        <div style="margin-left:auto" class="muted" id="count">Loading…</div>
+    </div>
+
+    <div id="msg" class="muted"></div>
+
+    <table id="files-table" aria-labelledby="files">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Language</th>
+                <th>Type</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+    async function loadLibrary(path, label){
+        try{
+            const res = await fetch(path, {cache: 'no-store'});
+            if(!res.ok) {
+                if(label === 'custom-library.json' && res.status === 404){
+                    return null;
+                }
+                throw new Error('HTTP error ' + res.status);
+            }
+            return await res.json();
+        }catch(e){
+            if(label === 'custom-library.json' && e.message.includes('404')){
+                return null;
+            }
+            const msgEl = document.getElementById('msg');
+            const message = 'Unable to load ' + label + ': ' + e.message;
+            msgEl.textContent = msgEl.textContent ? msgEl.textContent + ' ' + message : message;
+            return null;
+        }
+    }
+
+    function populateSelect(id, items){
+        const sel = document.getElementById(id);
+        // clear existing (keep first 'All')
+        sel.length = 1;
+        items.forEach(it => {
+            const opt = document.createElement('option');
+            opt.value = it;
+            opt.textContent = it;
+            sel.appendChild(opt);
+        });
+    }
+
+    function renderRows(tbody, files, q, cat, lang, type){
+        tbody.innerHTML = '';
+        const lowq = (q||'').toLowerCase();
+        let shown = 0;
+        files.forEach(({key, item, source})=>{
+            const name = item.name || '';
+            const category = item.category || '';
+            const language = item.language || '';
+            const typeValue = item.type || '';
+            if(cat && category !== cat) return;
+            if(lang && language !== lang) return;
+            if(type && typeValue !== type) return;
+            if(lowq && !name.toLowerCase().includes(lowq) && !(item.id||'').toLowerCase().includes(lowq)) return;
+            const tr = document.createElement('tr');
+            const tdName = document.createElement('td');
+            const a = document.createElement('a');
+            a.textContent = name || (item.id || '');
+            a.target = '_blank';
+            const basePath = source === 'custom' ? 'PDF/custom/' : 'PDF/';
+            const candidates = source === 'custom'
+                ? [basePath + (item.id || ''), item.id || '']
+                : ['PDF/' + (item.id || ''), 'PDF/custom/' + (item.id || ''), item.id || ''];
+            a.href = encodeURI(candidates[0]);
+            (async function resolveHref(anchor, candidates){
+                for (const candidate of candidates){
+                    try{
+                        const head = await fetch(candidate, {method: 'HEAD'});
+                        if(head.ok){
+                            anchor.href = encodeURI(candidate);
+                            return;
+                        }
+                    }catch(e){
+                        // ignore and try next candidate
+                    }
+                }
+                anchor.href = encodeURI(candidates[candidates.length - 1] || '');
+            })(a, candidates);
+            tdName.appendChild(a);
+            tr.appendChild(tdName);
+
+            const tdCat = document.createElement('td'); tdCat.textContent = category; tr.appendChild(tdCat);
+            const tdLang = document.createElement('td'); tdLang.textContent = language; tr.appendChild(tdLang);
+            const tdType = document.createElement('td'); tdType.textContent = typeValue; tr.appendChild(tdType);
+
+            tbody.appendChild(tr);
+            shown++;
+        });
+        return shown;
+    }
+
+    (async function(){
+        const lib = await loadLibrary('library.json', 'library.json');
+        const customLib = await loadLibrary('custom-library.json', 'custom-library.json');
+        if(!lib && !customLib) return;
+        const file_list = [
+            ...Object.entries(lib?.file_list || {}).map(([key, item]) => ({key, item, source: 'main'})),
+            ...Object.entries(customLib?.file_list || {}).map(([key, item]) => ({key, item, source: 'custom'}))
+        ];
+        const cats = Array.from(new Set([...(lib?.category || []), ...(customLib?.category || [])]));
+        const langs = Array.from(new Set([...(lib?.language || []), ...(customLib?.language || [])]));
+        const types = Array.from(new Set([...(lib?.type || []), ...(customLib?.type || [])]));
+
+        populateSelect('filter-category', cats);
+        populateSelect('filter-language', langs);
+        populateSelect('filter-type', types);
+
+        const tbody = document.querySelector('#files-table tbody');
+        const qel = document.getElementById('q');
+        const catEl = document.getElementById('filter-category');
+        const langEl = document.getElementById('filter-language');
+        const typeEl = document.getElementById('filter-type');
+        const countEl = document.getElementById('count');
+
+        function update(){
+            const q = qel.value.trim();
+            const cat = catEl.value;
+            const lang = langEl.value;
+            const type = typeEl.value;
+            const shown = renderRows(tbody, file_list, q, cat, lang, type);
+            const total = (Number(lib?.count || 0) + Number(customLib?.count || 0)) || file_list.length;
+            countEl.textContent = `${shown} / ${total} files`;
+        }
+
+        qel.addEventListener('input', update);
+        catEl.addEventListener('change', update);
+        langEl.addEventListener('change', update);
+        typeEl.addEventListener('change', update);
+
+        update();
+    })();
+    </script>
+</body>
+</html>
