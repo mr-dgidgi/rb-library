@@ -35,7 +35,7 @@ Then open http://127.0.0.1:8000/.
 Run the update script from the project root:
 
 ```bash
-python3 update.py
+./library-update.py
 ```
 
 The script scans the PDF folders and asks for the document name, language, category, and type when a new PDF is found.
@@ -80,7 +80,7 @@ Puis ouvrez http://127.0.0.1:8000/.
 Exécutez le script de mise à jour depuis la racine du projet :
 
 ```bash
-python3 update.py
+./library-update.py
 ```
 
 Le script analyse les dossiers de PDF et demande le nom du document, la langue, la catégorie et le type lorsqu’un nouveau PDF est détecté.
