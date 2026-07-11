@@ -1,9 +1,8 @@
-
 #!/usr/bin/env python3
 """Update library data by scanning PDFs and interactively adding missing entries.
 
 Usage:
-	python update.py            # CLI mode (interactive)
+	library-update.py            # CLI mode (interactive)
 
 The script looks for `library.json` and `custom-library.json` in the same
 folder and scans the `PDF` and `PDF/custom` subdirectories for PDF files.
