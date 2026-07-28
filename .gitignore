@@ -2,3 +2,4 @@
 #exclude custom files
 PDF/custom/
 custom-library.json
+.opencode/

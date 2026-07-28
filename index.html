@@ -2,26 +2,180 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>RecoveryBox Library</title>
+    <link rel="stylesheet" href="recoverybox-theme.css">
     <style>
-        body { font-family: system-ui, sans-serif; background: #0f1720; color: #e6eef3; padding: 24px; }
-        h1 { color: #ffcc00; margin: 0 0 12px 0 }
-        .controls { display:flex; gap:12px; align-items:center; margin: 12px 0 18px 0 }
-        select,input[type="search"] { padding:6px 8px; border-radius:6px; border:1px solid #233; background:#0b1220; color:#e6eef3 }
-        table { width:100%; border-collapse:collapse; background:#071018; margin-top:8px }
-        th,td { padding:10px 12px; border-bottom:1px solid #122233; text-align:left }
-        th { background:#071826; color:#9fe3a2 }
-        tr:nth-child(even) td { background:#06121a }
-        a { color:#8feea1; text-decoration:none }
-        a:hover { text-decoration:underline }
-        .muted { color:#99a0a6 }
-        .summary { margin-top:6px; color:#cfe8d6 }
-        @media (max-width:720px){ .controls{flex-direction:column;align-items:stretch} td,th{padding:8px} }
+    /* --------------------------------------------------------------------------
+       Page-specific styles (Library)
+       -------------------------------------------------------------------------- */
+    .rb-app {
+        padding: 20px;
+    }
+
+    .rb-page-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .rb-page-header h1 {
+        margin: 0;
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--rb-accent-camel);
+    }
+
+    /* Controls / Filters */
+    .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: flex-end;
+        margin: 0 0 18px 0;
+        padding: 16px;
+        background: var(--rb-bg-surface);
+        border: 1px solid var(--rb-border);
+        border-radius: var(--rb-radius);
+    }
+
+    .controls > label {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--rb-text-muted);
+        min-width: 140px;
+        flex: 1;
+    }
+
+    .controls select,
+    .controls input[type="search"] {
+        appearance: none;
+        width: 100%;
+        min-height: var(--rb-touch-target);
+        padding: 10px 14px;
+        font-family: var(--rb-font-sans);
+        font-size: 1rem;
+        line-height: 1.5;
+        color: var(--rb-text-main);
+        background-color: var(--rb-bg-primary);
+        border: 1px solid var(--rb-border);
+        border-radius: var(--rb-radius);
+        transition: border-color 0.15s ease;
+    }
+
+    .controls select:hover,
+    .controls input[type="search"]:hover {
+        border-color: var(--rb-accent-camel);
+    }
+
+    .controls select:focus,
+    .controls input[type="search"]:focus {
+        outline: none;
+        border-color: var(--rb-accent-camel);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--rb-accent-camel) 25%, transparent);
+    }
+
+    .controls select {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235C554E' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        padding-right: 40px;
+    }
+
+    .controls .count {
+        margin-left: auto;
+        font-size: 0.875rem;
+        color: var(--rb-text-muted);
+        white-space: nowrap;
+        align-self: center;
+    }
+
+    /* Table */
+    .rb-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--rb-bg-surface);
+        border: 1px solid var(--rb-border);
+        border-radius: var(--rb-radius);
+        overflow: hidden;
+        font-size: 0.875rem;
+    }
+
+    .rb-table thead {
+        background: var(--rb-bg-secondary);
+    }
+
+    .rb-table th {
+        padding: 14px 16px;
+        font-weight: 600;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--rb-text-muted);
+        text-align: left;
+        border-bottom: 2px solid var(--rb-border);
+    }
+
+    .rb-table td {
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--rb-border);
+        color: var(--rb-text-main);
+    }
+
+    .rb-table tbody tr:hover {
+        background-color: var(--rb-bg-secondary);
+    }
+
+    .rb-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .rb-table tbody tr:nth-child(even) {
+        background-color: var(--rb-bg-primary);
+    }
+
+    .rb-table a {
+        font-weight: 500;
+    }
+
+    .muted {
+        color: var(--rb-text-muted);
+    }
+
+    /* Responsive */
+    @media (max-width: 720px) {
+        .rb-app { padding: 12px; }
+        .controls { flex-direction: column; align-items: stretch; }
+        .controls > label { min-width: 100%; }
+        .controls .count { margin-left: 0; }
+        .rb-table th, .rb-table td { padding: 12px; }
+    }
     </style>
 </head>
-<body>
-    <h1>RecoveryBox Library</h1>
+<body class="rb-app">
+  <main class="rb-container">
+    <form class="rb-theme-toggle">
+      <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" aria-label="Passage en mode nuit" type="radio" name="__palette" id="__palette_0">
+      <label id="theme-to-dark" class="md-header__button md-icon" title="Passage en mode nuit" for="__palette_1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+
+      <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" aria-label="Passage en mode jour" type="radio" name="__palette" id="__palette_1">
+      <label id="theme-to-light" class="md-header__button md-icon" title="Passage en mode jour" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    </form>
+
+    <div class="rb-page-header">
+      <h1>RecoveryBox Library</h1>
+    </div>
 
     <div class="controls">
         <label>Category:
@@ -40,12 +194,12 @@
             <input id="q" type="search" placeholder="Search by name...">
         </label>
 
-        <div style="margin-left:auto" class="muted" id="count">Loading…</div>
+        <span class="count muted" id="count">Loading…</span>
     </div>
 
     <div id="msg" class="muted"></div>
 
-    <table id="files-table" aria-labelledby="files">
+    <table class="rb-table" id="files-table">
         <thead>
             <tr>
                 <th>Name</th>
@@ -58,6 +212,54 @@
     </table>
 
     <script>
+    (function() {
+      /* --- Theme Toggle --- */
+      var storageKey = 'rb-theme';
+      var root = document.documentElement;
+      var lightInput = document.getElementById('__palette_0');
+      var darkInput = document.getElementById('__palette_1');
+      var toDark = document.getElementById('theme-to-dark');
+      var toLight = document.getElementById('theme-to-light');
+
+      function getSavedTheme() {
+        try { return localStorage.getItem(storageKey); } catch (e) { return null; }
+      }
+      function setSavedTheme(theme) {
+        try { localStorage.setItem(storageKey, theme); } catch (e) {}
+      }
+      function getPreferredTheme() {
+        var saved = getSavedTheme();
+        if (saved === 'dark' || saved === 'light') return saved;
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      function applyTheme(theme) {
+        root.setAttribute('data-theme', theme);
+        if (theme === 'dark') {
+          darkInput.checked = true;
+          toLight.hidden = false;
+          toDark.hidden = true;
+        } else {
+          lightInput.checked = true;
+          toDark.hidden = false;
+          toLight.hidden = true;
+        }
+      }
+
+      applyTheme(getPreferredTheme());
+
+      toDark.addEventListener('click', function(e) {
+        e.preventDefault();
+        setSavedTheme('dark');
+        applyTheme('dark');
+      });
+      toLight.addEventListener('click', function(e) {
+        e.preventDefault();
+        setSavedTheme('light');
+        applyTheme('light');
+      });
+    })();
+
+    /* --- Library --- */
     async function loadLibrary(path, label){
         try{
             const res = await fetch(path, {cache: 'no-store'});
@@ -81,7 +283,6 @@
 
     function populateSelect(id, items){
         const sel = document.getElementById(id);
-        // clear existing (keep first 'All')
         sel.length = 1;
         items.forEach(it => {
             const opt = document.createElement('option');
@@ -122,9 +323,7 @@
                             anchor.href = encodeURI(candidate);
                             return;
                         }
-                    }catch(e){
-                        // ignore and try next candidate
-                    }
+                    }catch(e){}
                 }
                 anchor.href = encodeURI(candidates[candidates.length - 1] || '');
             })(a, candidates);
@@ -171,7 +370,7 @@
             const type = typeEl.value;
             const shown = renderRows(tbody, file_list, q, cat, lang, type);
             const total = (Number(lib?.count || 0) + Number(customLib?.count || 0)) || file_list.length;
-            countEl.textContent = `${shown} / ${total} files`;
+            countEl.textContent = shown + ' / ' + total + ' files';
         }
 
         qel.addEventListener('input', update);
@@ -182,5 +381,6 @@
         update();
     })();
     </script>
+  </main>
 </body>
 </html>

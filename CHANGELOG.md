@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.1.0] - 2026-07-28
+
+### Changes
+- UI reworked to match RecoveryBox Project style.
+
 ## [1.0.1] - 2026-07-11
 
 ### Changes
