@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RecoveryBox Library - Admin</title>
+    <link rel="stylesheet" href="recoverybox-theme.css">
+</head>
+<body class="rb-app">
+  <main class="rb-container">
+    <form class="rb-theme-toggle">
+      <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" aria-label="Passage en mode nuit" type="radio" name="__palette" id="__palette_0">
+      <label id="theme-to-dark" class="md-header__button md-icon" title="Passage en mode nuit" for="__palette_1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+
+      <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" aria-label="Passage en mode jour" type="radio" name="__palette" id="__palette_1">
+      <label id="theme-to-light" class="md-header__button md-icon" title="Passage en mode jour" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    </form>
+
+    <div class="rb-page-header">
+      <h1>RecoveryBox Library - Administration</h1>
+      <a href="index.html">&larr; Back to library</a>
+    </div>
+
+    <div id="msg" class="muted"></div>
+
+    <section id="login-panel" class="rb-panel">
+        <h2>Login</h2>
+        <form id="login-form">
+            <label>Username
+                <input id="username" type="text" autocomplete="username" required>
+            </label>
+            <label>Password
+                <input id="password" type="password" autocomplete="current-password" required>
+            </label>
+            <button class="rb-btn" type="submit">Log in</button>
+            <div id="login-error" class="error"></div>
+        </form>
+    </section>
+
+    <section id="admin-panel">
+        <div class="rb-panel rb-toolbar">
+            <span id="filebrowser-link-wrap"></span>
+            <button class="rb-btn" id="logout-btn" type="button">Log out</button>
+        </div>
+
+        <div class="rb-panel">
+            <h2>New files in PDF/custom</h2>
+            <div id="scan-msg" class="muted"></div>
+            <table class="rb-table" id="new-files-table">
+                <thead>
+                    <tr>
+                        <th>File</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Language</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <p>
+                <button class="rb-btn" id="save-btn" type="button" disabled>Save entries</button>
+            </p>
+        </div>
+    </section>
+
+    <script>
+    (function() {
+      /* --- Theme Toggle --- */
+      var storageKey = 'rb-theme';
+      var root = document.documentElement;
+      var lightInput = document.getElementById('__palette_0');
+      var darkInput = document.getElementById('__palette_1');
+      var toDark = document.getElementById('theme-to-dark');
+      var toLight = document.getElementById('theme-to-light');
+
+      function getSavedTheme() {
+        try { return localStorage.getItem(storageKey); } catch (e) { return null; }
+      }
+      function setSavedTheme(theme) {
+        try { localStorage.setItem(storageKey, theme); } catch (e) {}
+      }
+      function getPreferredTheme() {
+        var saved = getSavedTheme();
+        if (saved === 'dark' || saved === 'light') return saved;
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      function applyTheme(theme) {
+        root.setAttribute('data-theme', theme);
+        if (theme === 'dark') {
+          darkInput.checked = true;
+          toLight.hidden = false;
+          toDark.hidden = true;
+        } else {
+          lightInput.checked = true;
+          toDark.hidden = false;
+          toLight.hidden = true;
+        }
+      }
+
+      applyTheme(getPreferredTheme());
+
+      toDark.addEventListener('click', function(e) {
+        e.preventDefault();
+        setSavedTheme('dark');
+        applyTheme('dark');
+      });
+      toLight.addEventListener('click', function(e) {
+        e.preventDefault();
+        setSavedTheme('light');
+        applyTheme('light');
+      });
+    })();
+
+    (function() {
+      const API = 'admin/api';
+      let csrfToken = null;
+      let tags = { category: [], language: [], type: [] };
+
+      const msgEl = document.getElementById('msg');
+      const loginPanel = document.getElementById('login-panel');
+      const adminPanel = document.getElementById('admin-panel');
+      const loginForm = document.getElementById('login-form');
+      const loginError = document.getElementById('login-error');
+      const scanMsg = document.getElementById('scan-msg');
+      const tbody = document.querySelector('#new-files-table tbody');
+      const saveBtn = document.getElementById('save-btn');
+      const NEW_TAG_VALUE = '__new__';
+
+      function setMessage(text) {
+        msgEl.textContent = text || '';
+      }
+
+      async function apiFetch(path, options) {
+        const res = await fetch(path, Object.assign({ credentials: 'same-origin' }, options));
+        if (res.status === 401) {
+          showLogin();
+          throw new Error('authentication required');
+        }
+        return res;
+      }
+
+      function showLogin() {
+        loginPanel.style.display = 'block';
+        adminPanel.style.display = 'none';
+      }
+
+      function showAdmin() {
+        loginPanel.style.display = 'none';
+        adminPanel.style.display = 'block';
+      }
+
+      function buildTagSelect(key) {
+        const sel = document.createElement('select');
+        sel.dataset.tagKey = key;
+        (tags[key] || []).forEach(function(value) {
+          const opt = document.createElement('option');
+          opt.value = value;
+          opt.textContent = value;
+          sel.appendChild(opt);
+        });
+        const newOpt = document.createElement('option');
+        newOpt.value = NEW_TAG_VALUE;
+        newOpt.textContent = '+ Add new value...';
+        sel.appendChild(newOpt);
+
+        sel.addEventListener('change', async function() {
+          if (sel.value !== NEW_TAG_VALUE) return;
+          const value = (prompt('New ' + key + ' value:') || '').trim();
+          if (!value) {
+            sel.value = sel.options[0] ? sel.options[0].value : '';
+            return;
+          }
+          try {
+            const res = await apiFetch(API + '/tags', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
+              body: JSON.stringify({ key: key, value: value })
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || 'failed to add tag');
+            tags[key] = data.values;
+            document.querySelectorAll('select[data-tag-key="' + key + '"]').forEach(function(otherSel) {
+              const current = otherSel.value === NEW_TAG_VALUE ? value : otherSel.value;
+              otherSel.innerHTML = '';
+              tags[key].forEach(function(v) {
+                const opt = document.createElement('option');
+                opt.value = v;
+                opt.textContent = v;
+                otherSel.appendChild(opt);
+              });
+              const addOpt = document.createElement('option');
+              addOpt.value = NEW_TAG_VALUE;
+              addOpt.textContent = '+ Add new value...';
+              otherSel.appendChild(addOpt);
+              otherSel.value = current;
+            });
+          } catch (e) {
+            setMessage('Unable to add tag: ' + e.message);
+            sel.value = sel.options[0] ? sel.options[0].value : '';
+          }
+        });
+        return sel;
+      }
+
+      function renderNewFiles(files) {
+        tbody.innerHTML = '';
+        files.forEach(function(file) {
+          const tr = document.createElement('tr');
+          tr.dataset.fileId = file;
+
+          const tdFile = document.createElement('td');
+          tdFile.textContent = file;
+          tr.appendChild(tdFile);
+
+          const tdName = document.createElement('td');
+          const nameInput = document.createElement('input');
+          nameInput.type = 'text';
+          nameInput.value = file.replace(/\.pdf$/i, '').replace(/[_-]+/g, ' ');
+          nameInput.dataset.field = 'name';
+          tdName.appendChild(nameInput);
+          tr.appendChild(tdName);
+
+          ['category', 'language', 'type'].forEach(function(key) {
+            const td = document.createElement('td');
+            td.appendChild(buildTagSelect(key));
+            tr.appendChild(td);
+          });
+
+          tbody.appendChild(tr);
+        });
+        saveBtn.disabled = files.length === 0;
+      }
+
+      async function loadConfig() {
+        const res = await fetch(API + '/config');
+        const config = await res.json();
+        const wrap = document.getElementById('filebrowser-link-wrap');
+        if (config.filebrowser_enabled && config.filebrowser_url) {
+          const a = document.createElement('a');
+          a.href = config.filebrowser_url;
+          a.target = '_blank';
+          a.className = 'rb-btn rb-btn-link';
+          a.textContent = 'Open filebrowser';
+          wrap.appendChild(a);
+        } else {
+          const span = document.createElement('span');
+          span.className = 'muted';
+          span.textContent = 'filebrowser not available';
+          wrap.appendChild(span);
+        }
+      }
+
+      async function loadTagsAndScan() {
+        const tagsRes = await apiFetch(API + '/tags');
+        tags = await tagsRes.json();
+
+        const scanRes = await apiFetch(API + '/scan');
+        const scanData = await scanRes.json();
+        scanMsg.textContent = scanData.files.length + ' new file(s) found.';
+        renderNewFiles(scanData.files);
+      }
+
+      loginForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        loginError.textContent = '';
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value;
+        try {
+          const res = await fetch(API + '/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: username, password: password })
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || 'login failed');
+          csrfToken = data.csrf_token;
+          document.getElementById('password').value = '';
+          showAdmin();
+          await loadTagsAndScan();
+        } catch (e) {
+          loginError.textContent = e.message;
+        }
+      });
+
+      document.getElementById('logout-btn').addEventListener('click', async function() {
+        await fetch(API + '/logout', { method: 'POST' });
+        showLogin();
+      });
+
+      saveBtn.addEventListener('click', async function() {
+        const entries = Array.from(tbody.querySelectorAll('tr')).map(function(tr) {
+          return {
+            id: tr.dataset.fileId,
+            name: tr.querySelector('[data-field="name"]').value.trim(),
+            category: tr.querySelector('select[data-tag-key="category"]').value,
+            language: tr.querySelector('select[data-tag-key="language"]').value,
+            type: tr.querySelector('select[data-tag-key="type"]').value
+          };
+        });
+        try {
+          const res = await apiFetch(API + '/entries', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken },
+            body: JSON.stringify({ entries: entries })
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || 'failed to save entries');
+          setMessage(data.saved.length + ' entrie(s) saved.');
+          await loadTagsAndScan();
+        } catch (e) {
+          setMessage('Unable to save entries: ' + e.message);
+        }
+      });
+
+      showLogin();
+      loadConfig();
+    })();
+    </script>
+  </main>
+</body>
+</html>

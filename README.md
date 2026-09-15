@@ -45,6 +45,23 @@ PDFs from the main folder are added to library.json, while PDFs in PDF/custom ar
 - The custom library file is optional. If it does not exist, the web interface simply loads the main library.
 - The script creates a backup of the JSON file before updating it.
 
+## Web administration (optional)
+A small Flask backend (`backend/`) lets a single system account index new PDFs from `PDF/custom` through `admin.html`, without CLI access.
+
+- Only the system account whose **uid matches `RB_LIBRARY_ADMIN_UID`** (default `1000`) can log in; authentication is delegated to PAM, no separate password is stored.
+- New entries and new tag values are only ever written to `custom-library.json`; `library.json` stays read-only from the web.
+- Fully self-contained: its own venv (`.venv/`) and config live inside this project folder. The only touch on the shared Apache vhost is a single `Include` line (see `backend/apache-vhost-snippet.conf`) - no dedicated system service, no files outside this folder.
+- One-time setup:
+  ```bash
+  cd /path/to/rb-library
+  python3 -m venv .venv
+  .venv/bin/pip install -r backend/requirements.txt
+  cp backend/admin-config.example.json backend/admin-config.json
+  # edit backend/admin-config.json: secret_key, filebrowser_enabled/url
+  ```
+  Then add `Include /path/to/rb-library/backend/apache-vhost-snippet.conf` inside the existing vhost's `<VirtualHost>` block (requires `a2enmod wsgi` once for the host, shared by any Python-under-Apache app).
+- `PDF/custom/` and `custom-library.json` must belong to the account matching `RB_LIBRARY_ADMIN_UID` so the `mod_wsgi` daemon (running as that user) can write to them.
+
 Français
 ========
 
@@ -89,3 +106,20 @@ Les PDFs du dossier principal sont ajoutés à library.json, tandis que les PDFs
 ## Notes
 - Le fichier de bibliothèque custom est optionnel. S’il n’existe pas, l’interface web charge simplement la bibliothèque principale.
 - Le script crée une sauvegarde du fichier JSON avant de le mettre à jour.
+
+## Administration web (optionnel)
+Un petit backend Flask (`backend/`) permet à un compte système unique d'indexer les nouveaux PDFs de `PDF/custom` depuis `admin.html`, sans passer par la CLI.
+
+- Seul le compte système dont **l'uid correspond à `RB_LIBRARY_ADMIN_UID`** (défaut `1000`) peut se connecter ; l'authentification est déléguée à PAM, aucun mot de passe séparé n'est stocké.
+- Les nouvelles entrées et nouvelles valeurs de tag ne sont écrites que dans `custom-library.json` ; `library.json` reste en lecture seule depuis le web.
+- Entièrement auto-contenu : son propre venv (`.venv/`) et sa config vivent dans ce dossier de projet. La seule modification du vhost Apache partagé est une ligne `Include` (voir `backend/apache-vhost-snippet.conf`) - pas de service dédié, pas de fichier en dehors de ce dossier.
+- Mise en place initiale :
+  ```bash
+  cd /path/to/rb-library
+  python3 -m venv .venv
+  .venv/bin/pip install -r backend/requirements.txt
+  cp backend/admin-config.example.json backend/admin-config.json
+  # éditer backend/admin-config.json : secret_key, filebrowser_enabled/url
+  ```
+  Puis ajouter `Include /path/to/rb-library/backend/apache-vhost-snippet.conf` dans le bloc `<VirtualHost>` existant (nécessite `a2enmod wsgi` une fois pour l'hôte, partagé par toute appli Python sous Apache).
+- `PDF/custom/` et `custom-library.json` doivent appartenir au compte correspondant à `RB_LIBRARY_ADMIN_UID` pour que le daemon `mod_wsgi` (qui tourne sous cet utilisateur) puisse y écrire.
