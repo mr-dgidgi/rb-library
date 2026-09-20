@@ -202,7 +202,7 @@
 
     (async function(){
         const lib = await loadLibrary('library.json', 'library.json');
-        const customLib = await loadLibrary('custom-library.json', 'custom-library.json');
+        const customLib = await loadLibrary('PDF/custom/custom-library.json', 'custom-library.json');
         if(!lib && !customLib) return;
         const file_list = [
             ...Object.entries(lib?.file_list || {}).map(([key, item]) => ({key, item, source: 'main'})),

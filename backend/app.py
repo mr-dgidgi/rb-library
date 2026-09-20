@@ -1,8 +1,9 @@
 """Flask admin backend for web-based indexation of PDF/custom.
 
 Runs under Apache mod_wsgi with WSGIDaemonProcess user=recuser group=recuser
-so writes land with the correct ownership (PDF/custom and custom-library.json
-belong to recuser; library.json and PDF/ stay root-owned and read-only here).
+so writes land with the correct ownership (PDF/custom, which also holds
+custom-library.json, belongs to recuser; library.json and PDF/ stay
+root-owned and read-only here).
 Authentication is delegated to PAM and restricted to the system account whose
 uid matches RB_LIBRARY_ADMIN_UID (default 1000) - the username is resolved
 dynamically, so the app stays agnostic of the actual account name.
@@ -36,7 +37,7 @@ except ImportError:  # pam is only required at runtime on the target host
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 LIBRARY_PATH = ROOT_DIR / "library.json"
-CUSTOM_LIBRARY_PATH = ROOT_DIR / "custom-library.json"
+CUSTOM_LIBRARY_PATH = ROOT_DIR / "PDF" / "custom" / "custom-library.json"
 
 ALLOWED_UID = int(os.environ.get("RB_LIBRARY_ADMIN_UID", "1000"))
 

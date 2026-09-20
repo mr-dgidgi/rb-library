@@ -1,7 +1,6 @@
 *.bak
 #exclude custom files
 PDF/custom/
-custom-library.json
 .opencode/
 #exclude admin backend secrets
 backend/admin-config.json

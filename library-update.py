@@ -4,8 +4,9 @@
 Usage:
 	library-update.py            # CLI mode (interactive)
 
-The script looks for `library.json` and `custom-library.json` in the same
-folder and scans the `PDF` and `PDF/custom` subdirectories for PDF files.
+The script looks for `library.json` in the same folder and
+`custom-library.json` under `PDF/custom/`, and scans the `PDF` and
+`PDF/custom` subdirectories for PDF files.
 For each PDF not already listed in the relevant `file_list`, it asks the user
 for a name, language and category, then appends the entry.
 """
@@ -141,7 +142,7 @@ def main():
 	script_dir = Path(__file__).resolve().parent
 	root = Path(args.dir).resolve() if args.dir else script_dir
 	lib_path = script_dir / "library.json"
-	custom_lib_path = script_dir / "custom-library.json"
+	custom_lib_path = script_dir / "PDF" / "custom" / "custom-library.json"
 
 	cli_mode(root, lib_path, custom_lib_path)
 
