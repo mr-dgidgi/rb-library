@@ -245,7 +245,12 @@ def add_tag():
 	if value not in values:
 		values.append(value)
 		save_library(custom_lib, CUSTOM_LIBRARY_PATH)
-	return jsonify({"ok": True, "values": values})
+
+	# report the same main+custom merged list as GET /tags, so the client doesn't lose the main library's values
+	main_lib = load_library(LIBRARY_PATH)
+	main_values = main_lib.get(tag_key, []) or []
+	merged_values = list(main_values) + [v for v in values if v not in main_values]
+	return jsonify({"ok": True, "values": merged_values})
 
 
 @app.post("/entries")
