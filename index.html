@@ -5,159 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>RecoveryBox Library</title>
     <link rel="stylesheet" href="recoverybox-theme.css">
-    <style>
-    /* --------------------------------------------------------------------------
-       Page-specific styles (Library)
-       -------------------------------------------------------------------------- */
-    .rb-app {
-        padding: 20px;
-    }
-
-    .rb-page-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        margin-bottom: 24px;
-    }
-
-    .rb-page-header h1 {
-        margin: 0;
-        font-size: 1.75rem;
-        font-weight: 700;
-        color: var(--rb-accent-camel);
-    }
-
-    /* Controls / Filters */
-    .controls {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        align-items: flex-end;
-        margin: 0 0 18px 0;
-        padding: 16px;
-        background: var(--rb-bg-surface);
-        border: 1px solid var(--rb-border);
-        border-radius: var(--rb-radius);
-    }
-
-    .controls > label {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: var(--rb-text-muted);
-        min-width: 140px;
-        flex: 1;
-    }
-
-    .controls select,
-    .controls input[type="search"] {
-        appearance: none;
-        width: 100%;
-        min-height: var(--rb-touch-target);
-        padding: 10px 14px;
-        font-family: var(--rb-font-sans);
-        font-size: 1rem;
-        line-height: 1.5;
-        color: var(--rb-text-main);
-        background-color: var(--rb-bg-primary);
-        border: 1px solid var(--rb-border);
-        border-radius: var(--rb-radius);
-        transition: border-color 0.15s ease;
-    }
-
-    .controls select:hover,
-    .controls input[type="search"]:hover {
-        border-color: var(--rb-accent-camel);
-    }
-
-    .controls select:focus,
-    .controls input[type="search"]:focus {
-        outline: none;
-        border-color: var(--rb-accent-camel);
-        box-shadow: 0 0 0 3px color-mix(in srgb, var(--rb-accent-camel) 25%, transparent);
-    }
-
-    .controls select {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235C554E' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: right 12px center;
-        padding-right: 40px;
-    }
-
-    .controls .count {
-        margin-left: auto;
-        font-size: 0.875rem;
-        color: var(--rb-text-muted);
-        white-space: nowrap;
-        align-self: center;
-    }
-
-    /* Table */
-    .rb-table {
-        width: 100%;
-        border-collapse: collapse;
-        background: var(--rb-bg-surface);
-        border: 1px solid var(--rb-border);
-        border-radius: var(--rb-radius);
-        overflow: hidden;
-        font-size: 0.875rem;
-    }
-
-    .rb-table thead {
-        background: var(--rb-bg-secondary);
-    }
-
-    .rb-table th {
-        padding: 14px 16px;
-        font-weight: 600;
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: var(--rb-text-muted);
-        text-align: left;
-        border-bottom: 2px solid var(--rb-border);
-    }
-
-    .rb-table td {
-        padding: 14px 16px;
-        border-bottom: 1px solid var(--rb-border);
-        color: var(--rb-text-main);
-    }
-
-    .rb-table tbody tr:hover {
-        background-color: var(--rb-bg-secondary);
-    }
-
-    .rb-table tbody tr:last-child td {
-        border-bottom: none;
-    }
-
-    .rb-table tbody tr:nth-child(even) {
-        background-color: var(--rb-bg-primary);
-    }
-
-    .rb-table a {
-        font-weight: 500;
-    }
-
-    .muted {
-        color: var(--rb-text-muted);
-    }
-
-    /* Responsive */
-    @media (max-width: 720px) {
-        .rb-app { padding: 12px; }
-        .controls { flex-direction: column; align-items: stretch; }
-        .controls > label { min-width: 100%; }
-        .controls .count { margin-left: 0; }
-        .rb-table th, .rb-table td { padding: 12px; }
-    }
-    </style>
 </head>
 <body class="rb-app">
   <main class="rb-container">
@@ -175,6 +22,7 @@
 
     <div class="rb-page-header">
       <h1>RecoveryBox Library</h1>
+      <a id="admin-link" class="rb-btn rb-btn-link" href="admin.html" hidden>Administration</a>
     </div>
 
     <div class="controls">
@@ -341,8 +189,20 @@
     }
 
     (async function(){
+        try {
+            const res = await fetch('admin/api/config', {cache: 'no-store'});
+            if (res.ok) {
+                const config = await res.json();
+                document.getElementById('admin-link').hidden = !config.admin_enabled;
+            }
+        } catch (e) {
+            // admin backend not deployed/reachable: keep the button hidden
+        }
+    })();
+
+    (async function(){
         const lib = await loadLibrary('library.json', 'library.json');
-        const customLib = await loadLibrary('custom-library.json', 'custom-library.json');
+        const customLib = await loadLibrary('PDF/custom/custom-library.json', 'custom-library.json');
         if(!lib && !customLib) return;
         const file_list = [
             ...Object.entries(lib?.file_list || {}).map(([key, item]) => ({key, item, source: 'main'})),

@@ -1,0 +1,8 @@
+{
+    "secret_key": "REPLACE_ME: python3 -c \"import secrets; print(secrets.token_hex(32))\"",
+    "admin_enabled": true,
+    "filebrowser_enabled": false,
+    "filebrowser_url": "",
+    "session_lifetime_minutes": 30,
+    "session_cookie_secure": true
+}

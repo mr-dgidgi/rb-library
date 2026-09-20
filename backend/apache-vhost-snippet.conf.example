@@ -1,0 +1,38 @@
+# Apache vhost TEMPLATE: replace every __PLACEHOLDER__ before enabling it.
+# Add the completed file inside the existing <VirtualHost> with:
+#
+#     Include __RB_LIBRARY_DIR__/backend/apache-vhost-snippet.conf
+#
+# Requires mod_wsgi enabled once for the whole host (a2enmod wsgi via
+# libapache2-mod-wsgi-py3) - a prerequisite shared by any Python-under-Apache
+# app, not specific to this module. No other system-wide change is made.
+#
+# One-time setup (the venv may live anywhere):
+#     python3 -m venv __VENV_DIR__
+#     __VENV_DIR__/bin/pip install -r __RB_LIBRARY_DIR__/backend/requirements.txt
+#     cp __RB_LIBRARY_DIR__/backend/admin-config.example.json __RB_LIBRARY_DIR__/backend/admin-config.json
+#     # edit backend/admin-config.json: secret_key, filebrowser_enabled/url
+#
+# To remove this module entirely: delete the project folder and remove the
+# single Include line above from the vhost.
+# Required replacements:
+#   __RB_LIBRARY_DIR__ : absolute path to this project
+#   __VENV_DIR__       : absolute path to the virtualenv
+#   __ADMIN_USER__     : account owning PDF/custom and custom-library.json
+#   __ADMIN_GROUP__    : group used by that account (usually its primary group)
+#
+# python-home must point to the virtualenv root, not its bin/python executable.
+
+WSGIDaemonProcess rb-library-admin user=__ADMIN_USER__ group=__ADMIN_GROUP__ processes=1 threads=2 \
+    python-home=__VENV_DIR__ \
+    display-name=%{GROUP}
+
+WSGIScriptAlias /admin/api __RB_LIBRARY_DIR__/backend/wsgi.py process-group=rb-library-admin application-group=%{GLOBAL}
+
+<Directory __RB_LIBRARY_DIR__/backend>
+    WSGIProcessGroup rb-library-admin
+    Require all granted
+</Directory>
+
+# admin.html itself is served as a plain static file by the existing vhost,
+# no extra Alias needed as long as it sits next to index.html.
