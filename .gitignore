@@ -4,6 +4,7 @@ PDF/custom/
 .opencode/
 #exclude admin backend secrets
 backend/admin-config.json
+backend/apache-vhost-snippet.conf
 backend/__pycache__/
 #self-contained venv for the admin backend, created locally per install
 .venv/
