@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0] - 2026-07-29
+
+### Added
+- Admin interface to classify and manage library entries. The connexion in done with PAM and use linux user accounts.
+- link to a filebrowser in the admin interface customizable.
+
+### Changes
+- Language tags changed from 2 letters to full language names (e.g., "fr" to "french", "en" to "english").
 ## [1.1.0] - 2026-07-28
 
 ### Changes
